@@ -254,7 +254,8 @@ function (frml,withinData=sys.frame(sys.parent()),blocksizes,rows=NULL,
 			stop("The number of withinData rows is not large enough to support the blocked model.")	
 		doWholeBlock<-TRUE; # used only by Call
 	}
-		
+
+        initRows<-TRUE
 	if (!missing(rows)) {
 		rows<-rows-1
 		initRows<-TRUE  # used only by Call

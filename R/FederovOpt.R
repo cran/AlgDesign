@@ -46,15 +46,16 @@ function (frml,data=sys.frame(sys.parent()),nTrials,center=FALSE,approximate=FAL
     N <- nrow(X)
     k <- ncol(X)
 
+        doSpace<-TRUE
 	if ((criterion=="I" || evaluateI) && !missing(space)) {
 		S<-model.matrix(frml,space)
 		B<-t(S)%*%S/nrow(S)
 		B<-B[lower.tri(B,diag=TRUE)]
-		doSpace=TRUE
+		doSpace<-TRUE
 	}
 	else {
 		B<-NULL
-		doSpace=FALSE
+		doSpace<-FALSE
 	}
 
 	nRound<-0
@@ -100,7 +101,7 @@ function (frml,data=sys.frame(sys.parent()),nTrials,center=FALSE,approximate=FAL
       stop("Did not recognize the criterion.")
 
 
- 
+        RandomStart<-TRUE
 	if (missing(rows) || is.null(rows) || augment) {
 		if (augment) {
 			rows<-unique(rows)
@@ -140,7 +141,8 @@ function (frml,data=sys.frame(sys.parent()),nTrials,center=FALSE,approximate=FAL
 		}
 	if (value$error!=0)
 		stop(value$error)
-
+        
+        proportions<-0
 	if (approximate) {
 		proportions<-value$proportions;
 

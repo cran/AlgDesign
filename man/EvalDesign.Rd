@@ -9,7 +9,7 @@ eval.design(frml,design,confounding=FALSE,variances=TRUE,center=FALSE,X=NULL)
 }
 \arguments{
 	\item{frml}{The formula used to create the design.}
-	\item{design}{The design, which may be the design output by optDesign().}
+	\item{design}{The design, which may be the design part of the output of optFederov().}
 	\item{confounding}{If confounding=TRUE, the confounding patterns will be shown.} 
 	\item{variances}{If TRUE, the variances each term will be output.}
 	\item{center}{If TRUE, numeric variables will be centered before frml is applied.}
