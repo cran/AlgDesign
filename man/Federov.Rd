@@ -4,7 +4,7 @@
 
 \usage{
 optFederov(frml,data,nTrials,center=FALSE,approximate=FALSE,criterion="D",
-	evaluateI=FALSE,space=NULL,augment=FALSE,rows,nullify=FALSE,
+	evaluateI=FALSE,space=NULL,augment=FALSE,rows,nullify=0,
 	maxIteration=100,nRepeats=5,DFrac=1,CFrac=1,args=FALSE) 
 
 }
@@ -237,4 +237,3 @@ Wheeler, R.E. (2004). optFederov. \emph{AlgDesign}. The R project for statistica
 
 }
 \keyword{design}
-

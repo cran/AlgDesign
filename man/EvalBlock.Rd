@@ -30,11 +30,12 @@ eval.blockdesign(frml,design,blocksizes,rho=1,confounding=FALSE,center=FALSE)
 		to be recovered in the analysis.}
 	\item{block.centered.properties}{A matrix with four rows. The columns correspond to constant, whole
 		block terms and within block terms:
+
 		\enumerate{
-			\item The degrees of freedom for terms in the expanded model. 
-			\item The determinant of the block centered within block terms. 
-			\item The geometric mean of the block centered variances. 
-			\item The geometric mean of the ratio of centered to block centered variances.
+			\item The degrees of freedom for terms in the expanded model.  
+			\item The determinant of the block centered within block terms.  
+			\item The geometric mean of the block centered variances.  
+			\item The geometric mean of the ratio of centered to block centered variances. 
 			}
 		}
 }
