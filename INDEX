@@ -1,0 +1,15 @@
+optBlock                Optimal design blocking
+CCTable11.1a            Illustrative blocked design
+efficient.rounding      Efficient Rounding
+eval.blockdesign        Evaluates a blocked design.
+eval.design             Evaluates a design.
+expand.formula          Expanding a formula
+optFederov              Optimal design
+gen.factorial           Generates a full factorial design
+gen.mixture             Generate mixture
+GVTable1                Illustrative blocked design
+GVTable3                Illustrative blocked design
+model.matrix.formula    Builds a model matrix
+optMonteCarlo           Optimal design via Monte Carlo
+TGTable3                Illustrative blocked design
+TGTable5                Illustrative blocked design
