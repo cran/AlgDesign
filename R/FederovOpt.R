@@ -131,7 +131,7 @@ function (frml,data=sys.frame(sys.parent()),nTrials,center=FALSE,approximate=FAL
 	value<-.Call("FederovOpt", X,as.integer(RandomStart),as.integer(rows),as.integer(nullify),
 		as.integer(crit),as.integer(evaluateI),as.integer(doSpace),B,as.integer(augment),as.integer(approximate),
 		as.double(proportions),as.integer(nTrials),as.integer(maxIteration),as.integer(nRepeats),
-		as.double(DFrac),as.double(CFrac))
+		as.double(DFrac),as.double(CFrac),PACKAGE="AlgDesign")
 
 	if (value$error==12) {
 		stop("Singular design.")		}

@@ -546,7 +546,7 @@ function(levels,nVars=0,center=TRUE,factors="none",varNames=NULL){
 	}
 
 	design<-matrix(0,N,nVars)
-	.Call("GetFactorial",design,as.integer(levels),as.integer(center),as.integer(factorVec))
+	.Call("GetFactorial",design,as.integer(levels),as.integer(center),as.integer(factorVec),PACKAGE="AlgDesign")
 
 	design<-data.frame(design)
 	if (!missing(varNames) && length(varNames==nVars))
@@ -596,7 +596,7 @@ function(levels,vars) {
 
 	X<-matrix(0,N,nvars)
 
-	.Call("GetMixture", X,as.integer(levels))
+	.Call("GetMixture", X,as.integer(levels),PACKAGE="AlgDesign")
 
 	X<-data.frame(X)
 	colnames(X)<-vars

@@ -264,7 +264,7 @@ function (frml,withinData=sys.frame(sys.parent()),blocksizes,rows=NULL,
 
 
     value <- .Call("BlockOpt", X,as.integer(initRows),as.integer(rows),as.integer(nB),as.integer(blocksizes),
-		as.integer(doWholeBlock),Z,as.integer(nRepeats),as.integer(crit))
+		as.integer(doWholeBlock),Z,as.integer(nRepeats),as.integer(crit),PACKAGE="AlgDesign")
 
 	if (value$error==13) {
 		stop("All repeats produced singular designs.")
