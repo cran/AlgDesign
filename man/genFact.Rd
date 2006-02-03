@@ -29,7 +29,7 @@ dat<-gen.factorial(3,3,varNames=c("A","B","C"))
 }
 
 \author{
-	Bob Wheeler \email{bwheeler@echip.com}
+	Bob Wheeler \email{rwheeler@echip.com}
 	
 	Please cite this program as follows:
 

@@ -153,7 +153,7 @@ od<-optBlock(~D+E*(quad(A,B,C)),withinData=within$design,blocksizes=rep(6,9),who
 }
 
 \author{
-	Bob Wheeler \email{bwheeler@echip.com}
+	Bob Wheeler \email{rwheeler@echip.com}
 
 	Please cite this program as follows:
 

@@ -1,8 +1,8 @@
 Package: AlgDesign
-Version: 1.0-5
-Date: 2004/11/6
+Version: 1.0-7
+Date: 2006/02/03
 Title: AlgDesign
-Author: Bob Wheeler <bwheeler@echip.com>
+Author: Bob Wheeler <rwheeler@echip.com>
 Maintainer: Bob Wheeler <bwheeler@echip.com>
 Description: Algorithmic experimental designs. Calculates exact and approximate 
 	theory experimental designs for D,A, and I criteria. Very large
@@ -12,4 +12,4 @@ Description: Algorithmic experimental designs. Calculates exact and approximate
 	interact.
 License: GPL vesion 2 or newer
 URL: http://www.bobwheeler.com/stat 
-Packaged: Sat Nov  6 10:26:44 2004; Bob Wheeler
+Packaged: Fri Feb  3 18:42:00 2006; Bob Wheeler
