@@ -573,6 +573,11 @@ function(frml,data=sys.frame(sys.parent()),...){
 	model.matrix.default(frml,data,...)
 }
 
+"model.matrix.terms"<-
+function(...){
+  model.matrix.default(...)
+}
+
 
 "gen.mixture" <-
 function(levels,vars) {

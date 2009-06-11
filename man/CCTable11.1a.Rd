@@ -12,7 +12,7 @@
 }
 
 \source{
-	Cochran, W.G. and Cox, G.M. (1957). {\emph Experimental designs}. Wiley, N.Y.
+	Cochran, W.G. and Cox, G.M. (1957). \emph{Experimental designs}. Wiley, N.Y.
 }
 
 \keyword{datasets}

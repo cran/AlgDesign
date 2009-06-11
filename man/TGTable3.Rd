@@ -14,7 +14,7 @@
 
 \source{
 	Trinca, L.A. and Gilmour, S.G. (2001). Multistratum response surface designs. 
-		{\emph Technometrics}. 43-1. 25-33.
+		\emph{Technometrics}. 43-1. 25-33.
 }
 
 \keyword{datasets}

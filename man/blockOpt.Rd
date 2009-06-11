@@ -56,17 +56,17 @@ doc subfolder of this project.
 }
 
 \references{
-Atkinson, A.C. and Donev, A.N. (1989). The construction of exact D-optimum experimental designs with application to blocking response surface designs. {\emph Biometrika}. 76. 515-526.
+Atkinson, A.C. and Donev, A.N. (1989). The construction of exact D-optimum experimental designs with application to blocking response surface designs. \emph{Biometrika}. 76. 515-526.
 
 Cook, R.D. and Nachtsheim, C.J. (1989). Computer-aided blocking of factorial and response-surface designs. \emph{Technometrics.} 31-3. 339-346.
 
 Goos, P. and Vandebroek, M. (2003). D-optimal split-plot designs with given numbers and sizes of whole plots. \emph{Technometrics.} 45-3. 235-245.
 
-Nguyen, Nam-Ky. (2001). Cutting experimental designs into blocks. {\emph AusNZJSt}. 43-3. 367-374.
+Nguyen, Nam-Ky. (2001). Cutting experimental designs into blocks. \emph{AusNZJSt}. 43-3. 367-374.
 
-Trinca, L.A. and Gilmour, S.G. (2000). An algorithm for arranging response surface designs in small blocks. {\emph Computational Statistics and Data Analysis}. 33. 25-43.
+Trinca, L.A. and Gilmour, S.G. (2000). An algorithm for arranging response surface designs in small blocks. \emph{Computational Statistics and Data Analysis}. 33. 25-43.
 
-Trinca, L.A. and Gilmour, S.G. (2001). Multistratum response surface designs. {\emph Technometrics}. 43-1. 25-33.
+Trinca, L.A. and Gilmour, S.G. (2001). Multistratum response surface designs. \emph{Technometrics}. 43-1. 25-33.
 
 }
 
@@ -153,7 +153,7 @@ od<-optBlock(~D+E*(quad(A,B,C)),withinData=within$design,blocksizes=rep(6,9),who
 }
 
 \author{
-	Bob Wheeler \email{rwheeler@echip.com}
+	Bob Wheeler \email{bwheelerg@gmail.com}
 
 	Please cite this program as follows:
 

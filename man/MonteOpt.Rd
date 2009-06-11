@@ -142,7 +142,7 @@ exhaustive search.
 
 }
 \author{
-	Bob Wheeler \email{rwheeler@echip.com}
+	Bob Wheeler \email{bwheelerg@gmail.com}
 	
 	Please cite this program as follows:
 

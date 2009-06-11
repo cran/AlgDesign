@@ -41,7 +41,7 @@ eval.blockdesign(frml,design,blocksizes,rho=1,confounding=FALSE,center=FALSE)
 }
 
 \author{
-	Bob Wheeler \email{rwheeler@echip.com}
+	Bob Wheeler \email{bwheelerg@gmail.com}
 	
 	Please cite this program as follows:
 

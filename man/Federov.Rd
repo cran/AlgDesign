@@ -228,7 +228,7 @@ desDAN<-optFederov(~quad(A,B,C),dat,eval=TRUE,approx=TRUE,nTrials=15)
 }
 
 \author{
-	Bob Wheeler \email{rwheeler@echip.com}
+	Bob Wheeler \email{bwheelerg@gmail.com}
 	
 	Please cite this program as follows:
 
