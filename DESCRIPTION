@@ -1,6 +1,6 @@
 Package: AlgDesign
-Version: 1.0-10
-Date: 2009/06/11
+Version: 1.0-12
+Date: 2009/09/30
 Title: AlgDesign
 Author: Bob Wheeler <bwheelerg@gmail.com>
 Maintainer: Bob Wheeler <bwheelerg@gmail.com>
@@ -10,8 +10,8 @@ Description: Algorithmic experimental designs. Calculates exact and
         designs may be blocked or blocked designs created from a
         candidate list, using several criteria. The blocking can be
         done when whole and within plot factors interact.
-License: GPL-2
+License: GPL (>= 2)
 URL: http://www.bobwheeler.com/stat
-Packaged: 2009-06-18 14:20:43 UTC; Bob Wheeler
+Packaged: 2009-09-30 11:59:43 UTC; Bob Wheeler
 Repository: CRAN
-Date/Publication: 2009-06-18 16:37:09
+Date/Publication: 2009-09-30 18:55:46

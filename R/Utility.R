@@ -7,7 +7,8 @@ function(frml,varNames,const=TRUE,numerics=NULL){
 # Expands the formula in frml with quad(), cubic() and or cubicS()
 # Note: varNames is used only if . is used to represent all variables
 
-
+         env<-environment(frml) #remember the calling environment
+         
 		noNumerics<-missing(numerics)
 
         nameargs<-function(...){
@@ -142,7 +143,8 @@ function(frml,varNames,const=TRUE,numerics=NULL){
 		if (!const)
 			frml<-paste(frml,"+0",sep="")
 		frml<-as.formula(frml)
-
+         
+         environment(frml)<-env # make sure frml knows where it was created orginally
         frml
 }
 
