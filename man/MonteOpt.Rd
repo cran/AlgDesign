@@ -112,6 +112,10 @@ optMonteCarlo(frml,data,nTrials,approximate=FALSE,criterion="D",evaluateI=FALSE,
   The random numbers used in these calculations are controlled by the
   usual R random number mechanism.
 
+	A vignette giving further details is availble. To access it, type
+	
+	vignette("AlgDesign")
+
 }
 
 \note{

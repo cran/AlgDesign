@@ -68,6 +68,9 @@ The goal of algorithmic design is to maximize the information about the paramete
 
 The theoretical optimum value of \code{G} is known for approximate theory designs, and so \eqn{G_e}{Ge}, the \code{G} efficiency of \code{G} is available as a standard of design quality. It is especially useful, because \eqn{G_e}{Ge} provides a lower bound on \eqn{D_e}{De}, the \code{D} efficiency for approximate theory, to wit: \deqn{D_e\ge exp(1-1/G_e)}{De >= exp(1-1/Ge)}.
 
+	A vignette giving further details is availble. To access it, type
+	
+	vignette("AlgDesign")
 }
 
 \note{

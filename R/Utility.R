@@ -2,151 +2,125 @@
 # copyright (C) 2002-2004 by Robert E. Wheeler
 #
 
-"expand.formula" <-
-function(frml,varNames,const=TRUE,numerics=NULL){
-# Expands the formula in frml with quad(), cubic() and or cubicS()
-# Note: varNames is used only if . is used to represent all variables
-
-         env<-environment(frml) #remember the calling environment
-         
-		noNumerics<-missing(numerics)
-
-        nameargs<-function(...){
-        # returns a list of arguments, after Venables and Ripley, S Programming
-
-                dots<-as.list(substitute(list(...)))[-1]
-                nm<-names(dots)
-                fixup<-if(is.null(nm)) seq(along=dots) else nm==""
-                dep<-sapply(dots[fixup],function(x) deparse(x,width=500)[1])
-                if (is.null(nm)) nm<-dep
-                else {nm[fixup]<-dep}
-				if (!noNumerics){
-					if ((nm[1]=="." && !all(numerics)) || !all(numerics[is.element(varNames,nm)]))
-						stop("All arguments to special functions such as quad() must be numeric.")
-				}
-				nm
+"expand.formula"<-
+function (frml, varNames, const = TRUE, numerics = NULL) 
+{
+    env <- environment(frml)
+    noNumerics <- missing(numerics)
+    nameargs <- function(...) {
+        dots <- as.list(substitute(list(...)))[-1]
+        nm <- names(dots)
+        fixup <- if (is.null(nm)) 
+            seq(along = dots)
+        else nm == ""
+        dep <- sapply(dots[fixup], function(x) deparse(x, width = 500)[1])
+        if (is.null(nm)) 
+            nm <- dep
+        else {
+            nm[fixup] <- dep
         }
-
-		doDot<-function()
-		{
-		# expand . to list of variable names
-			nms<-varNames
-			nVars<-length(nms)
-			strg<-paste("(",paste("X",1:nVars,sep="",collapse="+"),")",sep="")
-			for (i in 1:nVars) {
-				ag<-paste("X",i,sep="")
-				strg<-sub(ag,repl=nms[i],strg)
-			}
-			strg
-		}
-
-        quad<-function (...) 
-        {
-        # quadratic polynomial in the arguments
-				if ("."==(nms<-nameargs(...))[1]) {
-					nms<-varNames
-					nVars<-length(nms)
-				}
-				else 
-					nVars<-nargs()
-                strg<-paste(paste("(",paste("X",1:nVars, sep = "", collapse = "+"), ")^2", sep = ""),
-					"+",paste("I(X", 1:nVars, "^2)", sep = "", collapse = "+"))
-                for (i in 1:nVars) {
-                        ag<-paste("X",i,sep="")
-                        strg<-gsub(ag,repl=nms[i],strg)
-                }
-                strg
+        if (!noNumerics) {
+            if ((nm[1] == "." && !all(numerics)) || !all(numerics[is.element(varNames, 
+                nm)])) 
+                stop("All arguments to special functions such as quad() must be numeric.")
         }
+        nm
+    }
 
-		cubic<-function (...) 
-        {
-        # cubic polynomial in the arguments
-				if ("."==(nms<-nameargs(...))[1]) {
-					nms<-varNames
-					nVars<-length(nms)
-				}
-				else 
-					nVars<-nargs()
-                strg<-paste(paste("(",paste("X",1:nVars, sep = "", collapse = "+"), ")^3", sep = ""), 
-                        "+",paste("I(X", 1:nVars, "^2)", sep = "", collapse = "+"),
-						"+",paste("I(X", 1:nVars, "^3)", sep = "", collapse = "+"))
-                for (i in 1:nVars) {
-                        ag<-paste("X",i,sep="")
-                        strg<-gsub(ag,repl=nms[i],strg)
-                }
-                strg
+	find.dot<-function (strng) {
+	# Returns location of dot in strng or -1 if not found
+		loc<-regexpr("([^0-9a-zA-Z_]+ *\\.)|(^ *\\.)",strng) #not variable followed by one or more spaces
+		locp<-loc[1]
+		if (locp!=-1) {	# dot found
+			leng<-attr(loc,"match.length")
+			subs<-substring(strng,locp,locp+leng-1) # substring containing dot 
+			locsub<-regexpr("\\.",subs) # loc of dot in substring
+			return(locp+locsub[1]-1)
+		} 
+		locp
+	}
+
+    quad <- function(...) {
+		nms<-nameargs(...)
+		if (-1!=find.dot(nms)) {
+            nms <- varNames
+            nVars <- length(nms)
         }
-
-
-		cubicS<-function (...) 
-		{
-		# Scheffe cubic polynomial in the arguments
-			if ("."==(nms<-nameargs(...))[1]) {
-				nms<-varNames
-				nVars<-length(nms)
-			}
-			else 
-				nVars<-nargs()
-			strg<-paste("(",paste("X",1:nVars, sep = "", collapse = "+"), ")^3", sep = "") 
-			for (i in 1:(nVars-1)) {
-				var<-paste("X",i,sep="")
-				strg<-paste(strg,"+",
-						paste(paste("I(",var,paste("*X", (i+1):nVars, sep=""),sep=""),
-							paste("*(",var,paste("-X",(i+1):nVars,"))",sep="")),collapse="+")
-					  ,sep="",collapse="+")	
-			}			  	
-			for (i in 1:nVars) {
-				ag<-paste("X",i,sep="")
-				strg<-gsub(ag,repl=nms[i],strg)
-			}
-			
-			strg
-		}
-
-		findFunction<-function(name,string) {
-		# finds start and end of name(...) in string. Returns c(0,0) if not found
-			if (-1==(strt<-regexpr(name,string)))
-				return(c(0,0))
-			head<-substr(string,1,strt-1)
-			tail<-substr(string,strt,nchar(string))
-			if (-1==(fin<-regexpr(")",tail)))
-				return(c(0,0))
-			c(strt,strt+fin-1)
-		}
-
-		findDot<-function(name,string) {
-		# finds dot in string. Returns c(0,0) if not found
-			if (-1==(strt<-regexpr(name,string,fixed=TRUE)))
-				return(c(0,0))
-			c(strt,strt)
-		}
-
-
-		frml<-deparse(frml,width=500)
-		while ((0!=(pos<-findFunction("quad",frml))[1]) ||
-			   (0!=(pos<-findFunction("cubicS",frml))[1]) ||
-			   (0!=(pos<-findFunction("cubic",frml))[1])) {
-				prog<-substr(frml,pos[1],pos[2])
-				strHead<-substr(frml,1,pos[1]-1)
-				strTail<-substr(frml,pos[2]+1,nchar(frml))
-				prog<-eval(parse(text=prog))
-				frml<-paste(strHead,prog,strTail,sep="")
-		}
-		if (0!=(pos<-findDot(".",frml))[1]) {
-				strHead<-substr(frml,1,pos[1]-1)
-				strTail<-substr(frml,pos[2]+1,nchar(frml))
-				prog<-eval(parse(text="doDot()"))
-				frml<-paste(strHead,prog,strTail,sep="")
-		}
-
-
-		if (!const)
-			frml<-paste(frml,"+0",sep="")
-		frml<-as.formula(frml)
-         
-         environment(frml)<-env # make sure frml knows where it was created orginally
-        frml
+        else nVars <- nargs()
+        strg <- paste(paste("(", paste("X", 1:nVars, sep = "", 
+            collapse = "+"), ")^2", sep = ""), "+", paste("I(X", 
+            1:nVars, "^2)", sep = "", collapse = "+"))
+        for (i in 1:nVars) {
+            ag <- paste("X", i, sep = "")
+            strg <- gsub(ag, repl = nms[i], strg)
+        }
+        strg
+    }
+    cubic <- function(...) {
+		nms<-nameargs(...)
+		if (-1!=find.dot(nms)) {
+            nms <- varNames
+            nVars <- length(nms)
+        }
+        else nVars <- nargs()
+        strg <- paste(paste("(", paste("X", 1:nVars, sep = "", 
+            collapse = "+"), ")^3", sep = ""), "+", paste("I(X", 
+            1:nVars, "^2)", sep = "", collapse = "+"), "+", paste("I(X", 
+            1:nVars, "^3)", sep = "", collapse = "+"))
+        for (i in 1:nVars) {
+            ag <- paste("X", i, sep = "")
+            strg <- gsub(ag, repl = nms[i], strg)
+        }
+        strg
+    }
+    cubicS <- function(...) {
+		nms<-nameargs(...)
+		if (-1!=find.dot(nms)) {
+            nms <- varNames
+            nVars <- length(nms)
+        }
+        else nVars <- nargs()
+        strg <- paste("(", paste("X", 1:nVars, sep = "", collapse = "+"), 
+            ")^3", sep = "")
+        for (i in 1:(nVars - 1)) {
+            var <- paste("X", i, sep = "")
+            strg <- paste(strg, "+", paste(paste("I(", var, paste("*X", 
+                (i + 1):nVars, sep = ""), sep = ""), paste("*(", 
+                var, paste("-X", (i + 1):nVars, "))", sep = "")), 
+                collapse = "+"), sep = "", collapse = "+")
+        }
+        for (i in 1:nVars) {
+            ag <- paste("X", i, sep = "")
+            strg <- gsub(ag, repl = nms[i], strg)
+        }
+        strg
+    }
+    findFunction <- function(name, string) {
+        if (-1 == (strt <- regexpr(name, string))) 
+            return(c(0, 0))
+        head <- substr(string, 1, strt - 1)
+        tail <- substr(string, strt, nchar(string))
+        if (-1 == (fin <- regexpr(")", tail))) 
+            return(c(0, 0))
+        c(strt, strt + fin - 1)
+    }
+    frml <- deparse(frml, width = 500)
+    while ((0 != (pos <- findFunction("quad", frml))[1]) || (0 != 
+        (pos <- findFunction("cubicS", frml))[1]) || (0 != (pos <- findFunction("cubic", 
+        frml))[1])) {
+        prog <- substr(frml, pos[1], pos[2])
+        strHead <- substr(frml, 1, pos[1] - 1)
+        strTail <- substr(frml, pos[2] + 1, nchar(frml))
+        prog <- eval(parse(text = prog))
+        frml <- paste(strHead, prog, strTail, sep = "")
+    }
+    if (!const) 
+        frml <- paste(frml, "+0", sep = "")
+    frml <- as.formula(frml)
+    environment(frml) <- env
+    frml
 }
+
 
 
 
@@ -569,7 +543,7 @@ function(frml,data=sys.frame(sys.parent()),...){
 		if (!inherits(data,"data.frame"))
 			stop("data must be a data.frame")
 		if (!inherits(frml,"formula"))
-			stop("frml must be a formuls")
+			stop("frml must be a formula")
 		frml<-expand.formula(frml,colnames(data))
 	}
 	model.matrix.default(frml,data,...)

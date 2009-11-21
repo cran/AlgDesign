@@ -47,6 +47,11 @@ Although the D criterion produces good designs for all blocks, the allocation fo
 Blocking may also be done using the orthogonal blocking procedure of Nguyen. This comes in two flavors OB and OBS which differ in that for OBS, the columns of S are scaled by division with the sample variance of the data, thus deemphasizing squared and other large terms.
 
 Blocking may be done when whole plot factors interact with within plot factors. Split plot experiments are sometimes of this nature. Goos and Vandebroek (2003) developed a procedure for this problem which algorithmically blocks using a candidate list and the ratio between the whole and within variances. Trinca and Gilmour (2001) give an algorithm which does not depend on the ratio of the variances. The present procedure assumes that the whole blocks and their factors, have been decided upon in advance. It makes no assumptions about the ratio between whole and within variances. 
+
+	A vignette giving further details is availble. To access it, type
+	
+	vignette("AlgDesign")
+
 }
 
 \note{
