@@ -118,11 +118,7 @@ optMonteCarlo(frml,data,nTrials,approximate=FALSE,criterion="D",evaluateI=FALSE,
 
 }
 
-\note{
 
-Details of the calculations and expanded examples may be found in ``Comments on algorithmic design'' in the
-doc subfolder of this project.
-}
 
 \value{
 The output is the same list as from \code{optFederov}, but the criteria

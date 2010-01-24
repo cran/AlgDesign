@@ -54,11 +54,7 @@ Blocking may be done when whole plot factors interact with within plot factors. 
 
 }
 
-\note{
-Details of the calculations and expanded examples may be found in ``Comments on algorithmic design'' in the
-doc subfolder of this project.
 
-}
 
 \references{
 Atkinson, A.C. and Donev, A.N. (1989). The construction of exact D-optimum experimental designs with application to blocking response surface designs. \emph{Biometrika}. 76. 515-526.

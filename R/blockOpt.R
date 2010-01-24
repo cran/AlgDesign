@@ -10,6 +10,8 @@ function (frml,withinData=sys.frame(sys.parent()),blocksizes,rows=NULL,
 
 {
 
+	if (!exists(".Random.seed"))
+		set.seed(555111666)
 
 	seed<-.Random.seed
 

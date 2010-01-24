@@ -9,6 +9,8 @@ function (frml,data=sys.frame(sys.parent()),nTrials,center=FALSE,approximate=FAL
 	evaluateI=FALSE,space=NULL,augment=FALSE,rows=NULL,nullify=0,maxIteration = 100,nRepeats=5,
 	DFrac=1,CFrac=1,args=FALSE) 
 {
+	if (!exists(".Random.seed"))
+		set.seed(555111666)
 	seed<-.Random.seed
 
 	if (missing(frml) || !inherits(frml,"formula")) {

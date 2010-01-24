@@ -6,6 +6,8 @@
 function(frml,data,nTrials,approximate=FALSE,criterion="D",evaluateI=FALSE,space=NULL,mixtureSum=1,
 	constraints=NULL,RandomStart=TRUE,nRepeats=5,nCand,nCandNull,DFrac=1,CFrac=1,args=FALSE)
 {
+	if (!exists(".Random.seed"))
+		set.seed(555111666)
 	seed<-.Random.seed
 
 	RandomLevels<-function(N,s) {

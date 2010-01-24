@@ -81,8 +81,7 @@ details.
 
 The function gen.mixture() generates a list of candidate points whose rows sum to unity.
 
-Details of the calculations and expanded examples may be found in ``Comments on algorithmic design'' in the
-doc subfolder of this project.
+
 }
 
 \references{
