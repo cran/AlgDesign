@@ -72,7 +72,7 @@ function (frml,withinData=sys.frame(sys.parent()),blocksizes,rows=NULL,
 
 	######### Check the input and make withinData if necessary
 
-	if (missing(frml) || !inherits(frml,"formula")) {
+	if (missing(frml) || !inherits(frml,c("formula","character"))) {
 		if (missing(withinData))
 			stop("frml and withinData cannot both be missing.")
 		frml<-~.

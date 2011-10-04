@@ -13,7 +13,7 @@ function (frml,data=sys.frame(sys.parent()),nTrials,center=FALSE,approximate=FAL
 		set.seed(555111666)
 	seed<-.Random.seed
 
-	if (missing(frml) || !inherits(frml,"formula")) {
+	if (missing(frml) || !inherits(frml,c("formula","character"))) {
 		if (missing(data))
 			stop("frml and data cannot both be missing.")
 		frml<-~.
