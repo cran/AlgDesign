@@ -1,4 +1,4 @@
-1ae9ac5d4abd95af1cb36a37fd213918 *DESCRIPTION
+d6ef3242dafbaed778c0768fc3ecf429 *DESCRIPTION
 61151e50a4acc801e177f243d8ecc7b2 *INDEX
 b0128595c4fbc169848f68f793356f60 *NAMESPACE
 2bc84c34dd8667b6afc3058b43c2a5ce *R/FederovOpt.R
@@ -11,7 +11,7 @@ f33bba53441a5e9b9dcff05bc0b19c47 *data/GVTable1.rda
 db8574ef0b5a97ff249e5d305f0d9d13 *data/TGTable3.rda
 f62fec4b1a7e3928962bdeb7815822d8 *data/TGTable5.rda
 791155ccde54d2e839a9224e40a82dec *inst/doc/AlgDesign.Rnw
-0686d61d78e7bec581c1cea9beb1f69d *inst/doc/AlgDesign.pdf
+af8e09f80b8b86247912010542733db1 *inst/doc/AlgDesign.pdf
 c4f131b6f40bc1377e9ad98302acbb07 *inst/doc/AlgDesignPaper.bib
 36fedc82d32ecbadfedea67c920a2bdd *inst/doc/ConstrainedPlot.png
 418efc502671585b96321e5d400a877e *man/AlgDesign-Internal.Rd
