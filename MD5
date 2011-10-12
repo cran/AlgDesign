@@ -1,4 +1,4 @@
-d6ef3242dafbaed778c0768fc3ecf429 *DESCRIPTION
+a92a659f40c4f9c991f92a331ed7ea54 *DESCRIPTION
 61151e50a4acc801e177f243d8ecc7b2 *INDEX
 b0128595c4fbc169848f68f793356f60 *NAMESPACE
 2bc84c34dd8667b6afc3058b43c2a5ce *R/FederovOpt.R
@@ -11,7 +11,7 @@ f33bba53441a5e9b9dcff05bc0b19c47 *data/GVTable1.rda
 db8574ef0b5a97ff249e5d305f0d9d13 *data/TGTable3.rda
 f62fec4b1a7e3928962bdeb7815822d8 *data/TGTable5.rda
 791155ccde54d2e839a9224e40a82dec *inst/doc/AlgDesign.Rnw
-af8e09f80b8b86247912010542733db1 *inst/doc/AlgDesign.pdf
+946f91b4e14faa359801f730c57868d7 *inst/doc/AlgDesign.pdf
 c4f131b6f40bc1377e9ad98302acbb07 *inst/doc/AlgDesignPaper.bib
 36fedc82d32ecbadfedea67c920a2bdd *inst/doc/ConstrainedPlot.png
 418efc502671585b96321e5d400a877e *man/AlgDesign-Internal.Rd
@@ -31,7 +31,7 @@ ae5d3d98221d337d289fcb6ca3d95cd9 *man/ModelMatrixTerms.Rd
 82e6c7098648ed9b2113161b92ca87c7 *man/blockOpt.Rd
 210d71a12d091260f831efc86b1aab7a *man/genFact.Rd
 81304130551adc2679c8ae7faeb15635 *man/genMixture.Rd
-bba982868cd0b7718594de43870ecb27 *src/FederovOpt.c
+00151f4f8d3bf6686067e9ee6bd0b132 *src/FederovOpt.c
 9384ac792245b69ea85c2d027d828eb6 *src/OptBlock.c
 808fec66802c9941e44359f5488fdbbf *src/Utility.c
 8e43868d307e94e1e159955deef6b780 *src/wheeler.h
