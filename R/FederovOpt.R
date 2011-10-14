@@ -171,7 +171,6 @@ function (frml,data=sys.frame(sys.parent()),nTrials,center=FALSE,approximate=FAL
 
 	if (approximate==FALSE) {
 		RowNos<-sort(1+((value$rows[1:nTrials])%%N))
-		RowNos<-unique(RowNos) # Duplicates can occur with nullification 
 	}
 
 	if (center) { # reverse centering for ouput
