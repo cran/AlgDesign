@@ -1,10 +1,13 @@
-41b631aac9b1fb5127ba2c93d76328e6 *DESCRIPTION
+2f4ab32c3e5292ce479bc9c5e6ac6c54 *DESCRIPTION
 61151e50a4acc801e177f243d8ecc7b2 *INDEX
 b50c61b7dee3b55db4414352cbd02363 *NAMESPACE
+781182641a8580a282ccda90e3cbee8d *NEWS
 976f69a4a2026933d1cb4aed6c8c134c *R/FederovOpt.R
 370f30b8468694b8f0939c5713ed2a19 *R/MonteOpt.R
 08c2840b7acc79c39642094398e52f9c *R/Utility.R
 3b37daaecff68923b0e9ddacaca73913 *R/blockOpt.R
+e221a5eea1e53ba9caea822c474419dc *README
+5befaf9f42bbf745c9cd55d39358a9dd *Wheeler
 3bba4bbe8e8c8be2abaa30c9d1e91ce0 *build/vignette.rds
 61c27f6bb87b7efde7449e7bf90efa80 *data/CCTable11.1a.rda
 f33bba53441a5e9b9dcff05bc0b19c47 *data/GVTable1.rda
