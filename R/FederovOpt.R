@@ -7,7 +7,7 @@
 "optFederov" <-
 function (frml,data=sys.frame(sys.parent()),nTrials,center=FALSE,approximate=FALSE,criterion="D",
 	evaluateI=FALSE,space=NULL,augment=FALSE,rows=NULL,nullify=0,maxIteration = 100,nRepeats=5,
-	DFrac=1,CFrac=1,args=FALSE) 
+	DFrac=1,CFrac=1,args=FALSE)
 {
 	if (!exists(".Random.seed"))
 		set.seed(555111666)
@@ -18,7 +18,7 @@ function (frml,data=sys.frame(sys.parent()),nTrials,center=FALSE,approximate=FAL
 			stop("frml and data cannot both be missing.")
 		frml<-~.
 	}
-		
+
 	if (missing(data)) { # Create a data matrix from the global variables in frml
 		frmla<-formula(paste("~-1+",paste(all.vars(frml),sep="",collapse="+"),sep=""))
 		data<-data.frame(model.matrix(frmla,data))
@@ -27,21 +27,21 @@ function (frml,data=sys.frame(sys.parent()),nTrials,center=FALSE,approximate=FAL
 		if (!inherits(data,"data.frame")) {
 			data<-data.frame(data)   # to insure the columns are named
 			if (ncol(data)==1)
-				colnames(data)<-"X1"  
+				colnames(data)<-"X1"
 		}
-	} 
+	}
 
 	if (any(is.na(data)))
 		stop("Missing values are not allowed.")
 
 	numericColumn<-sapply(data,is.numeric)
 
-	if (center) { 
+	if (center) {
 		means<-apply(data[,numericColumn],2,mean)
 		data[,numericColumn]<-sweep(data[,numericColumn,drop=FALSE],2,means)
 	}
-	
-	frml<-expand.formula(frml,colnames(data),numeric=numericColumn)
+
+	frml<-expand.formula(frml,colnames(data),numerics=numericColumn)
 
 	X<-model.matrix(frml,data)
 
@@ -66,7 +66,7 @@ function (frml,data=sys.frame(sys.parent()),nTrials,center=FALSE,approximate=FAL
 		if (!augment && !missing(rows)) {
 			nTrials<-length(unique(rows))
 		}
-		else 
+		else
 			nTrials<-k+5
 	}
 	else {
@@ -143,7 +143,7 @@ function (frml,data=sys.frame(sys.parent()),nTrials,center=FALSE,approximate=FAL
 		}
 	if (value$error!=0)
 		stop(value$error)
-        
+
         proportions<-0
 	if (approximate) {
 		proportions<-value$proportions;
@@ -157,7 +157,7 @@ function (frml,data=sys.frame(sys.parent()),nTrials,center=FALSE,approximate=FAL
 			}
 			proportions<-proportions[RowNos]
 			proportions<-proportions/sum(proportions)
-			proportions<-efficient.rounding(proportions,nRound)	
+			proportions<-efficient.rounding(proportions,nRound)
 			RowNos<-RowNos[proportions>0]
 			proportions<-proportions[proportions>0]
 		}
@@ -182,21 +182,21 @@ function (frml,data=sys.frame(sys.parent()),nTrials,center=FALSE,approximate=FAL
 		Design<-cbind(proportions,Design)
 		if (nRound>0)
 			colnames(Design)[1]<-"Rep.."
-		else 
+		else
 			colnames(Design)[1]<-"Proportion"
 	}
 	rownames(Design)<-RowNos
 
 	De<-exp(1-1/value$G)
 
-	
+
 	output<-list(D = value$D, A = value$A)
 	if (criterion=="I" || evaluateI) {
 		output<-c(output,list( I = value$I))
 	}
 	output<-c(output,list(Ge = round(value$G,3),Dea = round(De,3),design=Design,rows=RowNos))
 
-	if (args) 
+	if (args)
 		output<-c(output,list(seed=seed),args=actuals(formals("optFederov")))
 
 	output

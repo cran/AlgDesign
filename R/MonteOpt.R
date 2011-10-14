@@ -16,7 +16,7 @@ function(frml,data,nTrials,approximate=FALSE,criterion="D",evaluateI=FALSE,space
 		round(s*runif(N))/s
 	}
 
-	
+
 	RandomMixture<-function(N) {
         # Returns a vector of random Barycentric values.
           v<-rexp(N)
@@ -33,7 +33,7 @@ function(frml,data,nTrials,approximate=FALSE,criterion="D",evaluateI=FALSE,space
           v
 	}
 
-	RandomCand<-function (N,nTrials=100) 
+	RandomCand<-function (N,nTrials=100)
 	# Generates a random matrix of centered variable values using the limits in the first two columns of limits
 	# If the original limits on a variable are (a,b,c) with c the centering value. The limits input here
 	# should be (a,b-a,c). The Constraint() function expects non-centered values.
@@ -49,7 +49,7 @@ function(frml,data,nTrials,approximate=FALSE,criterion="D",evaluateI=FALSE,space
 			if (is.null(constraints) ||	constraints(q)) {
 				inside<-inside+1
 				if (doCenter)
-					q[noMixNos]<-q[noMixNos]-Limits[noMixNos,3]	
+					q[noMixNos]<-q[noMixNos]-Limits[noMixNos,3]
 				mat[inside,]<-q
 			}
 		}
@@ -64,7 +64,7 @@ function(frml,data,nTrials,approximate=FALSE,criterion="D",evaluateI=FALSE,space
 	randNullify<-function(N,nCand=100) {
 	# Nullify using random points
 		rc<-RandomCand(N,nCand)
-		j<-(sort(apply(rc*rc,1,sum),dec=TRUE,ind=TRUE)$ix)[1]
+		j<-(sort(apply(rc*rc,1,sum),decreasing=TRUE,ind=TRUE)$ix)[1]
 		design<-matrix(rc[j,],1,N)
 		failure<-0
 		expdes<-t(expand(design))
@@ -75,7 +75,7 @@ function(frml,data,nTrials,approximate=FALSE,criterion="D",evaluateI=FALSE,space
 			aa<-qr(expdes)
 			if (aa$rank==nrow(design)) {
 				failure<-0
-				j<-(sort(diag(t(expcand)%*%(expcand-expdes%*%qr.coef(aa,expcand))),dec=TRUE,ind=TRUE)$ix)[1]
+				j<-(sort(diag(t(expcand)%*%(expcand-expdes%*%qr.coef(aa,expcand))),decreasing=TRUE,ind=TRUE)$ix)[1]
 				design<-rbind(design,cand[j,])
 				expdes<-cbind(expdes,expcand[,j])
 			}
@@ -88,7 +88,7 @@ function(frml,data,nTrials,approximate=FALSE,criterion="D",evaluateI=FALSE,space
 	}
 
 	expand<-function(M){
-		colnames(M)<-varNames 
+		colnames(M)<-varNames
 		v<-data.frame(M)
 		k<-ncol(v)
 		for (i in 1:k) {
@@ -124,17 +124,17 @@ function(frml,data,nTrials,approximate=FALSE,criterion="D",evaluateI=FALSE,space
 				expcand<-expand(cand)
 				w<-M%*%t(expcand)
 				d<-diag(expcand%*%w)
-				j<-sort(d,dec=TRUE,ind=TRUE)$ix[1]						
+				j<-sort(d,decreasing=TRUE,ind=TRUE)$ix[1]
 				design<-rbind(design,cand[j,])
 				M<-((q+1)/q)*(M-(w[,j]%*%t(w[,j]))/(q+d[j]))
-				q<-q+1		
+				q<-q+1
 			}
-		
+
 			if (nTrials<q) {
-				return(list(D=0,A=0,I=0,G=0,design=0,iter=0,error=15))												 
+				return(list(D=0,A=0,I=0,G=0,design=0,iter=0,error=15))
 			}
 		}
-			
+
 		iter<-0
 		D<-A<-I<-Ge<-De<-0
 		error<-NULL
@@ -147,7 +147,7 @@ function(frml,data,nTrials,approximate=FALSE,criterion="D",evaluateI=FALSE,space
 				cand<-rbind(design,cand)
 				rows<-1:nTrials
 			}
-			else 
+			else
 			if (approximate) {
 				rows<-1:nTrials # optFedrov() will take nTrials from the length of rows whem missTrials is TRUE
 				if (missTrials)
@@ -163,7 +163,7 @@ function(frml,data,nTrials,approximate=FALSE,criterion="D",evaluateI=FALSE,space
 
 
 			aa<-optFederov(frml,cand,nTrials=nT,approximate=approximate,rows=rows,
-				crit=criterion,eval=evaluateI,space=space,
+				criterion=criterion,evaluateI=evaluateI,space=space,
 				DFrac=DFrac,CFrac=CFrac)
 			save=FALSE
 			if ((criterion=="D") && (aa$D>bestCrit)) {
@@ -186,15 +186,15 @@ function(frml,data,nTrials,approximate=FALSE,criterion="D",evaluateI=FALSE,space
 				more=FALSE
 			}
 
-                        
+
 			iter<-iter+1
 			if (iter>maxIter) {
 				more=FALSE
 			}
-			
+
 
 		}
-		aaBest												 
+		aaBest
 	}
 
 
@@ -203,7 +203,7 @@ function(frml,data,nTrials,approximate=FALSE,criterion="D",evaluateI=FALSE,space
 	if (missing(data))
 		stop("data is required.")
 
-    if (criterion!="D" && criterion!="A" && criterion!="I") 
+    if (criterion!="D" && criterion!="A" && criterion!="I")
       stop("Incorrect criterion")
 
 	if (approximate && !RandomStart)
@@ -242,9 +242,9 @@ function(frml,data,nTrials,approximate=FALSE,criterion="D",evaluateI=FALSE,space
 			mixRound<-max(roundDigits[mixNos],2)
 		}
 	}
-	
+
 	if (doMixture) { # make sure there is no constant
-		frml<-deparse(frml,width=500)
+		frml<-deparse(frml,width.cutoff=500)
 		frml<-paste(frml,"+0",sep="")
 		frml<-as.formula(frml)
 	}
@@ -266,15 +266,15 @@ function(frml,data,nTrials,approximate=FALSE,criterion="D",evaluateI=FALSE,space
 		nCandNull<-nCand
 
 	output<-getCenteredDesign(N,nTrials,missTrials)
-	
-	
+
+
 	# remove centering
 	design<-output$design
 	nRows<-nrow(design)
 	if (doCenter)
 		output$design<-design+matrix(Limits[,3],nRows,N,byrow=TRUE)
 	rownames(output$design)<-1:nRows
-	
+
 
 		# output the criterion values and the uncentered design
 	output<-output[names(output)!="rows"]

@@ -1,2 +1,4 @@
 useDynLib("AlgDesign")
-exportPattern("^[^\\.]")
+export(actuals, efficient.rounding, eval.blockdesign, eval.design,
+       expand.formula, gen.factorial, gen.mixture, optBlock, optFederov,
+       optMonteCarlo, model.matrix.formula, model.matrix.terms)

@@ -2052,8 +2052,10 @@ SEXP FederovOpt(
 		SET_ELEMENT(alist,5,errVector);
 		UNPROTECT(1);
 
-		PROTECT(rowVector=NEW_INTEGER(N));
-		for (i=0;i<N;i++) {
+		// CRAN correction 2014-02-11
+		int Nr = LENGTH(rowsi);
+		PROTECT(rowVector=NEW_INTEGER(Nr));
+		for (i=0;i<Nr;i++) {
 			INTEGER_POINTER(rowVector)[i]=rows[i];
 		}
 		SET_ELEMENT(alist,6,rowVector);

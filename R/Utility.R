@@ -3,25 +3,25 @@
 #
 
 "expand.formula"<-
-function (frml, varNames, const = TRUE, numerics = NULL) 
+function (frml, varNames, const = TRUE, numerics = NULL)
 {
     env <- environment(frml)
     noNumerics <- missing(numerics)
     nameargs <- function(...) {
         dots <- as.list(substitute(list(...)))[-1]
         nm <- names(dots)
-        fixup <- if (is.null(nm)) 
+        fixup <- if (is.null(nm))
             seq(along = dots)
         else nm == ""
-        dep <- sapply(dots[fixup], function(x) deparse(x, width = 500)[1])
-        if (is.null(nm)) 
+        dep <- sapply(dots[fixup], function(x) deparse(x, width.cutoff = 500)[1])
+        if (is.null(nm))
             nm <- dep
         else {
             nm[fixup] <- dep
         }
         if (!noNumerics) {
-            if ((nm[1] == "." && !all(numerics)) || !all(numerics[is.element(varNames, 
-                nm)])) 
+            if ((nm[1] == "." && !all(numerics)) || !all(numerics[is.element(varNames,
+                nm)]))
                 stop("All arguments to special functions such as quad() must be numeric.")
         }
         nm
@@ -33,10 +33,10 @@ function (frml, varNames, const = TRUE, numerics = NULL)
 		locp<-loc[1]
 		if (locp!=-1) {	# dot found
 			leng<-attr(loc,"match.length")
-			subs<-substring(strng,locp,locp+leng-1) # substring containing dot 
+			subs<-substring(strng,locp,locp+leng-1) # substring containing dot
 			locsub<-regexpr("\\.",subs) # loc of dot in substring
 			return(locp+locsub[1]-1)
-		} 
+		}
 		locp
 	}
 
@@ -47,12 +47,12 @@ function (frml, varNames, const = TRUE, numerics = NULL)
             nVars <- length(nms)
         }
         else nVars <- nargs()
-        strg <- paste(paste("(", paste("X", 1:nVars, sep = "", 
-            collapse = "+"), ")^2", sep = ""), "+", paste("I(X", 
+        strg <- paste(paste("(", paste("X", 1:nVars, sep = "",
+            collapse = "+"), ")^2", sep = ""), "+", paste("I(X",
             1:nVars, "^2)", sep = "", collapse = "+"))
         for (i in 1:nVars) {
             ag <- paste("X", i, sep = "")
-            strg <- gsub(ag, repl = nms[i], strg)
+            strg <- gsub(ag, nms[i], strg)
         }
         strg
     }
@@ -63,13 +63,13 @@ function (frml, varNames, const = TRUE, numerics = NULL)
             nVars <- length(nms)
         }
         else nVars <- nargs()
-        strg <- paste(paste("(", paste("X", 1:nVars, sep = "", 
-            collapse = "+"), ")^3", sep = ""), "+", paste("I(X", 
-            1:nVars, "^2)", sep = "", collapse = "+"), "+", paste("I(X", 
+        strg <- paste(paste("(", paste("X", 1:nVars, sep = "",
+            collapse = "+"), ")^3", sep = ""), "+", paste("I(X",
+            1:nVars, "^2)", sep = "", collapse = "+"), "+", paste("I(X",
             1:nVars, "^3)", sep = "", collapse = "+"))
         for (i in 1:nVars) {
             ag <- paste("X", i, sep = "")
-            strg <- gsub(ag, repl = nms[i], strg)
+            strg <- gsub(ag, nms[i], strg)
         }
         strg
     }
@@ -80,33 +80,33 @@ function (frml, varNames, const = TRUE, numerics = NULL)
             nVars <- length(nms)
         }
         else nVars <- nargs()
-        strg <- paste("(", paste("X", 1:nVars, sep = "", collapse = "+"), 
+        strg <- paste("(", paste("X", 1:nVars, sep = "", collapse = "+"),
             ")^3", sep = "")
         for (i in 1:(nVars - 1)) {
             var <- paste("X", i, sep = "")
-            strg <- paste(strg, "+", paste(paste("I(", var, paste("*X", 
-                (i + 1):nVars, sep = ""), sep = ""), paste("*(", 
-                var, paste("-X", (i + 1):nVars, "))", sep = "")), 
+            strg <- paste(strg, "+", paste(paste("I(", var, paste("*X",
+                (i + 1):nVars, sep = ""), sep = ""), paste("*(",
+                var, paste("-X", (i + 1):nVars, "))", sep = "")),
                 collapse = "+"), sep = "", collapse = "+")
         }
         for (i in 1:nVars) {
             ag <- paste("X", i, sep = "")
-            strg <- gsub(ag, repl = nms[i], strg)
+            strg <- gsub(ag, nms[i], strg)
         }
         strg
     }
     findFunction <- function(name, string) {
-        if (-1 == (strt <- regexpr(name, string))) 
+        if (-1 == (strt <- regexpr(name, string)))
             return(c(0, 0))
         head <- substr(string, 1, strt - 1)
         tail <- substr(string, strt, nchar(string))
-        if (-1 == (fin <- regexpr(")", tail))) 
+        if (-1 == (fin <- regexpr(")", tail)))
             return(c(0, 0))
         c(strt, strt + fin - 1)
     }
-    frml <- deparse(frml, width = 500)
-    while ((0 != (pos <- findFunction("quad", frml))[1]) || (0 != 
-        (pos <- findFunction("cubicS", frml))[1]) || (0 != (pos <- findFunction("cubic", 
+    frml <- deparse(frml, width.cutoff = 500)
+    while ((0 != (pos <- findFunction("quad", frml))[1]) || (0 !=
+        (pos <- findFunction("cubicS", frml))[1]) || (0 != (pos <- findFunction("cubic",
         frml))[1])) {
         prog <- substr(frml, pos[1], pos[2])
         strHead <- substr(frml, 1, pos[1] - 1)
@@ -114,7 +114,7 @@ function (frml, varNames, const = TRUE, numerics = NULL)
         prog <- eval(parse(text = prog))
         frml <- paste(strHead, prog, strTail, sep = "")
     }
-    if (!const) 
+    if (!const)
         frml <- paste(frml, "+0", sep = "")
     frml <- as.formula(frml)
     environment(frml) <- env
@@ -141,7 +141,7 @@ function(frmals){
 
 "efficient.rounding" <-
 function(proportions,n,random=TRUE){
-# Efficient rounding, following Pulkesheim and Rieder, (1992). Efficient rounding of 
+# Efficient rounding, following Pulkesheim and Rieder, (1992). Efficient rounding of
 #	approximate designs. Biometrika. 79, 763-770
 # proportions: a vector of proportions
 # n: the integer sum of the rounded proportions
@@ -198,10 +198,10 @@ function(proportions,n,random=TRUE){
 "eval.blockdesign" <-
 function(frml,design,blocksizes,rho=1,confounding=FALSE,center=FALSE){
 # evaluates a blocked design.
-# a formula 
+# a formula
 # a design
 # a vector of blocksizes
-# rho is a vector of variance component ratios. 
+# rho is a vector of variance component ratios.
 # confounding=TRUE, returns the confounding matrix
 # center=TRUE, the numeric columns will be centered before model expansion
 
@@ -210,14 +210,14 @@ function(frml,design,blocksizes,rho=1,confounding=FALSE,center=FALSE){
 	frml<-expand.formula(frml,colnames(design))
 	design<-data.frame(design)
 	numericColumns<-sapply(design,is.numeric)
-	if (center) { 
+	if (center) {
 		means<-apply(design[,numericColumns,drop=FALSE],2,mean)
 		design[,numericColumns]<-sweep(design[,numericColumns,drop=FALSE],2,means)
 	}
 	des<-model.matrix(frml,design)
 	desBlkCtr<-des
 
-	if (missing(blocksizes)) 
+	if (missing(blocksizes))
 		stop("blocksizes must be specified")
 
 	if (any(rho<1e-10 || rho>1e10))
@@ -230,7 +230,7 @@ function(frml,design,blocksizes,rho=1,confounding=FALSE,center=FALSE){
 		st<-fn+1
 		fn<-fn+blocksizes[i]
 		ad<-desBlkCtr[st:fn,]
-		S[i,]<-apply(ad,2,sum) 
+		S[i,]<-apply(ad,2,sum)
 		ad<-scale(ad,scale=FALSE)
 		desBlkCtr[st:fn,]<-ad
 	}
@@ -356,7 +356,7 @@ function(frml,design,blocksizes,rho=1,confounding=FALSE,center=FALSE){
 	t<-dg[!wholeIndex]
 	t<-exp(mean(log(t)))
 	outs[3,3]<-sprintf("%f",t)
-	
+
 
 	 # efficiencies of un-blockcentered to blockcentered designs
 	dg<-(diag(MI)/diag(Mbc))
@@ -382,32 +382,32 @@ function(frml,design,blocksizes,rho=1,confounding=FALSE,center=FALSE){
 }
 
 "eval.design" <-
-function (frml, design, confounding = FALSE, variances = TRUE, 
-     center = FALSE, X=NULL) 
+function (frml, design, confounding = FALSE, variances = TRUE,
+     center = FALSE, X=NULL)
 {
 	rownames(design)<-1:nrow(design) # prevents warning messages in case of duplicated rownames
 	proportions<-NULL
 	if (colnames(design)[1]=="Rep..") { # Expand data according to Rep.. from optFederov() output.
-		ND<-nrow(design)		
+		ND<-nrow(design)
 		reps<-design[,1]
 		design<-design[,-1,drop=FALSE]
 		design<-design[rep(1:ND,reps),]
 		rownames(design)<-1:nrow(design)
 	}
-	else 
+	else
 	if (colnames(design)[1]=="Proportion") {
 		proportions<-design[,1]
 		design<-design[,-1,drop=FALSE]
 	}
-	
+
 
     frml <- expand.formula(frml, colnames(design))
     design <- data.frame(design)
     numericColumns <- sapply(design, is.numeric)
     if (center) {
-        means <- apply(design[, numericColumns, drop = FALSE], 
+        means <- apply(design[, numericColumns, drop = FALSE],
             2, mean)
-        design[, numericColumns] <- sweep(design[, numericColumns, 
+        design[, numericColumns] <- sweep(design[, numericColumns,
             drop = FALSE], 2, means)
     }
     des <- model.matrix(frml, design)
@@ -415,14 +415,14 @@ function (frml, design, confounding = FALSE, variances = TRUE,
 	if (!missing(X)){
 		X<-data.frame(X)
 		if (center) {
-			means <- apply(X[, numericColumns, drop = FALSE], 
+			means <- apply(X[, numericColumns, drop = FALSE],
 				2, mean)
-			X[, numericColumns] <- sweep(X[, numericColumns, 
+			X[, numericColumns] <- sweep(X[, numericColumns,
 				drop = FALSE], 2, means)
 		}
 		Xd <- model.matrix(frml, X)
 	}
- 
+
     output <- NULL
 	if (is.vector(proportions)) {
 		M<-t(des)%*%diag(proportions)%*%des
@@ -464,7 +464,7 @@ function (frml, design, confounding = FALSE, variances = TRUE,
 	}
     output <- c(output, list(determinant = determinant,A = trac))
 	if (!missing(X)) {
-		output<-c(output,list(I = Ival,Geff = round(Geff,3), Deffbound = round(Deff,3))) 
+		output<-c(output,list(I = Ival,Geff = round(Geff,3), Deffbound = round(Deff,3)))
 	}
 	output<-c(output,list(diagonality = round(orthog,3)))
 
@@ -497,7 +497,7 @@ function(levels,nVars=0,center=TRUE,factors="none",varNames=NULL){
 	else {
 		nVars<-length(levels)
 	}
-	
+
 	if (any(levels<1))
 		stop("All levels must be greater than 1")
 
@@ -565,14 +565,14 @@ function(levels,vars) {
 	else {
 		nvars<-length(vars)
 	}
-	
+
 	levels<-levels[1]-1
 
 	if (levels<1)
 		stop("levels error")
 	if (nvars<2)
 		stop("vars error")
-	
+
 	N<-choose(levels+nvars-1,levels);
 
 	X<-matrix(0,N,nvars)
@@ -581,7 +581,7 @@ function(levels,vars) {
 
 	X<-data.frame(X)
 	colnames(X)<-vars
-	X	
+	X
 }
 
 

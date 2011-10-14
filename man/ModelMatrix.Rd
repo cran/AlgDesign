@@ -5,7 +5,7 @@
  Produces a model matrix using expand.formula()
 }
 \usage{
-model.matrix.formula(frml,data,...)
+\method{model.matrix}{formula}(frml,data,...)
 }
 
 \arguments{

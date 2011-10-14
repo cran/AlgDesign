@@ -5,7 +5,7 @@
   defines a model.matrix function for the terms class
 }
 \usage{
-model.matrix.terms(...) 
+\method{model.matrix}{terms}(...) 
 }
 \details{
   This is not to be called by the user.
