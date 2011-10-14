@@ -1,5 +1,5 @@
 Package: AlgDesign
-Version: 1.1-7.1
+Version: 1.1-7.2
 Date: 2011/10/14
 Title: Algorithmic Experimental Design
 Author: Bob Wheeler <bwheelerg@gmail.com>
@@ -12,9 +12,9 @@ Description: Algorithmic experimental designs. Calculates exact and
         done when whole and within plot factors interact.
 License: GPL (>= 2)
 URL: no longer valid
-Packaged: 2014-02-11 19:10:40 UTC; ripley
+Packaged: 2014-02-12 09:07:20 UTC; ripley
 Repository: CRAN
-Date/Publication: 2014-02-11 20:11:14
+Date/Publication: 2014-02-12 10:10:49
 NeedsCompilation: yes
 X-CRAN-Original-Maintainer: Bob Wheeler <bwheelerg@gmail.com>
 X-CRAN-Original-URL: http://www.bobwheeler.com/statistics

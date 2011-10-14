@@ -1541,7 +1541,7 @@ int FederovOptimize(
 	int		iter=0;
 	int		miter;
 	double  crit;
-	double  logDcrit;
+//	double  logDcrit;
 	double  Acrit;
 	double  Icrit=0;
 	double  logdet;
@@ -1687,7 +1687,7 @@ int FederovOptimize(
 		}
 
 		/* The T from nullify() is not scaled by n; hence remake it here. */
-        logDcrit=reduceDesign(trows,X,T,maxmin,vec,k,n,true,&singular);
+        reduceDesign(trows,X,T,maxmin,vec,k,n,true,&singular);
 
 		if (doApprox) { /* Set the initial proportions to 1/k for rows in the design. */
 			memset((void *)proportions,0,N*sizeof(double));
@@ -1771,7 +1771,7 @@ restart: if (!singular) {
 							proportions[i]=1/(double)n;
 						}
 					}
-					logDcrit=reduceDesign(trows,X,T,maxmin,vec,k,n,true,&singular);
+					reduceDesign(trows,X,T,maxmin,vec,k,n,true,&singular);
 					goto restart;
 				}
 			}

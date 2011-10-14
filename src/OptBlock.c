@@ -1185,7 +1185,6 @@ void exchangeDpc(
 	int		i;
 	int     iBlock=nB*MAXN;
 	double  *deli=0;
-	double  *delj=0;
 
 
 	xmi=blockMeans+curBlock*k;
@@ -1241,9 +1240,6 @@ void exchangeDpc(
 	if (!extraBlock || newBlock!=nB) {
 		nj=blocksizes[newBlock];
 		kn=(nj<=k)?nj-1:k;
-
-		if (doWholeBlock) 
-			delj=blockFactors+newBlock*k;
 
 		pT=T+newBlock*K;
 
@@ -2580,7 +2576,6 @@ void initializeB(
 	int i;
 	int j;
 	int l;
-	int m;
 	int bs;
 	int iBlock=nB*MAXN;
 	int t;
@@ -2611,7 +2606,6 @@ void initializeB(
 
 
 	l=0;
-	m=0;
 	for (i=0;i<nB;i++) {
 		bs=blocksizes[i];
 		for (j=0;j<bs;j++) {
@@ -3461,8 +3455,8 @@ SEXP BlockOpt(
 	int		nRepeats;
 	int		criterion;
 	double  D;
-	double  Dp;
-	double  diagonality;
+	double  Dp = 0.0; // -Wall
+	double  diagonality = 0.0;
 
 	int		*BlockArray;
 	int		*irows=NULL;
