@@ -40,7 +40,7 @@ bool doApprox=false; /* global switch */
 int FederovOptimize(double *X,double *B,double *BU,double *proportions,bool RandomStart,int Nullify,
 	int	criterion,bool evaluateI,bool doSpace,
 	int augment,double *D,double *A,double *I,double *G,double *U,double *V,double *T,double *Ti,double *Tip,
-	double *W,double *maxmin,dType *d,double *vec,int *designFlag,int *designFlagNullify,int *rows,
+	double *W,double *maxmin,dType *d,double *vec,int *designFlag,int *rows,
 		    int	*trows,int N,int n,int k,int maxIteration,int nRepeats,double DFrac,double  CFrac,bool *error);
 
 
@@ -53,10 +53,10 @@ double GetLinearCriterionA(double *pBU,int criterion,double *pU,int k);
 
 int  ProgAlloc(double **U,double **V,double **B,
 	double **BU,double **T,double **Ti,double	**Tip,double  **W,double **maxmin,dType **d,
-	double  **vec,int **designFlag,int **designFlagNullify,int **trows,int Nin,int	n,int k,bool criterion,
+	double  **vec,int **designFlag,int **trows,int Nin,int	n,int k,bool criterion,
 	bool evaluateI,bool doSpace);
 void ProgDealloc(double *U,double *V,double *B,double *BU,double	*T,double *Ti,
-	double	*Tip,double  *W,double *maxmin,dType *d,double  *vec,bool *designFlag,bool *designFlagNullify,int *trows);
+	double	*Tip,double  *W,double *maxmin,dType *d,double  *vec,bool *designFlag,int *trows);
 void FillInB(double *X,double *B,int k,int N);
 
 void BacksolveT(double *matrixXY,int nColumns,bool scaled);
@@ -87,9 +87,9 @@ void updateA(int xnew,double *proportions,double alpha,double *T,double	*X,doubl
 double getNextRow(double *V,int N,int k,int *designFlag,int	*newRow);
 void orthog(double *V,double *vec,int *designFlag,double scale,int N,int k);
 void orthogAug(double *V,int *rows,int augment,int *designFlag,int N,int k);
-int nullify(double *X,double *V,int augment,int *rows,bool *designFlag, int N,int k);
+int nullify(double *X,double *V,int augment,int *rows,bool *designFlag,int N,int k);
 void filloutDesign(double	*T,double *Ti,double *Tip,int	*rows,
-	int *designFlagNullify, double	*X,double *maxmin,double *vec,
+	int *designFlag,double	*X,double *maxmin,double *vec,
 	int k,int ka,int	n,int N,bool *singular);
 void transposeMatrix(double *X,int N,int k);
 
@@ -1286,7 +1286,6 @@ int ProgAlloc(
 	dType	**d,   
 	double  **vec, 
 	int		**designFlag, 
-	int     **designFlagNullify,
 	int		**trows,	
 	int		N,  
 	int		n, 
@@ -1328,8 +1327,6 @@ int ProgAlloc(
 	if (!*vec) return 9;
 	*designFlag=(int *)R_alloc(N,sizeof(int));
 	if (!*designFlag) return 10;
-	*designFlagNullify=(int *)R_alloc(N,sizeof(int));
-	if (!*designFlagNullify) return 10;
 	*trows=(int *)R_alloc(N,sizeof(int)); /* N because Permute needs N for RandomStart */
 	if (!*trows) return 11;
 
@@ -1353,7 +1350,6 @@ void ProgDealloc(
 	dType	*d,  
 	double  *vec, 
 	int 	*designFlag, 
-	int		*designFlagNullify,
 	int		*trows
 )	
 {
@@ -1381,8 +1377,6 @@ void ProgDealloc(
 		Free(vec);
 	if (designFlag)
 		Free(designFlag);
-	if (designFlagNullify)
-		Free(designFlagNullify);
 	if (trows)
 		Free(trows);
 
@@ -1396,7 +1390,7 @@ void filloutDesign(
 	double	*Ti,
 	double	*Tip,
 	int		*rows,
-	int		*designFlagNullify,
+	int		*designFlag,
 	double	*X,
 	double	*maxmin,
 	double	*vec,
@@ -1442,7 +1436,7 @@ void filloutDesign(
 		delta=-1;
 		for (j=0;j<N;j++) {
 			sumsq=0;			/* d=(xTiTi'x'), where x is a row of X and then find delta=max(d) */
-			if (!designFlagNullify[j]) {
+			if (!designFlag[j]) {
 				pX=X+j*k;
 				pTip=Tip;
 				for (l=0;l<k;l++) {
@@ -1464,8 +1458,6 @@ void filloutDesign(
 		if (newRow==-1) {
 			*singular=true;
 			return; /* singular */
-		} else {
-			designFlagNullify[newRow]=1;
 		}
 
 		pX=X+newRow*k;
@@ -1519,7 +1511,6 @@ int FederovOptimize(
 	double  *vec, /* Temporary storage */
 	int 	*designFlag, /* non-zero if row of X is in design Set to 2 for augmentee points */
 						 /* It is used to mark nullfy induced non support points when doAapprox is true. */
-	int		*designFlagNullify, /* Used only in filloutDesign() to avoid duplicate rows when nullify=1 */
 	int		*rows,	/* input/output array of indexes of design row numbers from X */
 	int		*trows,	/* working array */
 	int     N,  /* Number of rows in X */
@@ -1602,15 +1593,12 @@ int FederovOptimize(
 				}
 			}
 				
-			for (i=0;i<N;i++) {
-				designFlagNullify[i]=designFlag[i];
-			}
 
 			ka=maxm(k,augment);
 
 			if (n>ka) {	/* Adds rows to make n by choosing points with max variance */
 				if (Nullify==1) {
-					filloutDesign(T,Ti,Tip,rows,designFlagNullify,X,maxmin,vec,k,ka,n,N,&singular);
+					filloutDesign(T,Ti,Tip,rows,designFlag,X,maxmin,vec,k,ka,n,N,&singular);
 					if (singular) {
 						countSingular++;
 						break;
@@ -1954,7 +1942,6 @@ SEXP FederovOpt(
 	dType	*d=0; 
 	double  *vec=0;
 	int 	*designFlag=0; 
-	int		*designFlagNullify=0;
 	int		*trows=0;
 	int     i;
 
@@ -1996,11 +1983,11 @@ SEXP FederovOpt(
 	transposeMatrix(X,N,k);
 
 	if (!(error=ProgAlloc(&U,&V,&B,&BU,&T,&Ti,&Tip,&W,&maxmin,&d,&vec,
-			&designFlag,&designFlagNullify,&trows,N,n,k,criterion,evaluateI,doSpace))) {
+			&designFlag,&trows,N,n,k,criterion,evaluateI,doSpace))) {
 
 		iter=FederovOptimize(X,B,BU,proportions, 
 			RandomStart,Nullify,criterion,evaluateI,doSpace,augment,&D,
-			&A,&I,&G,U,V,T,Ti,Tip,W,maxmin,d,vec,designFlag,designFlagNullify,rows,trows,N,n,k,
+			&A,&I,&G,U,V,T,Ti,Tip,W,maxmin,d,vec,designFlag,rows,trows,N,n,k,
 			maxIteration,nRepeats,DFrac,CFrac,&error);
 
 			/* Prepare a list to return */
@@ -2072,7 +2059,7 @@ SEXP FederovOpt(
 	else 
 		return NULL;
 	/* In case Calloc() is used */
-/*	ProgDealloc(U,V,B,BU,T,Ti,Tip,W,maxmin,d,vec,designFlag,designFlagNullify,trows); */
+/*	ProgDealloc(U,V,B,BU,T,Ti,Tip,W,maxmin,d,vec,designFlag,trows); */
 
 
 }
