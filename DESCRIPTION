@@ -1,14 +1,7 @@
 Package: AlgDesign
-Version: 1.2.1.1
+Version: 1.2.1.2
 Title: Algorithmic Experimental Design
-Authors@R: c(person(given = "Bob",
-                    family = "Wheeler",
-                    role = "aut",
-                    email = "bwheelerg@gmail.com"),
-             person(given = "Jerome",
-                    family = "Braun",
-                    role = "cre",
-                    email = "jvbraun.statistics@gmail.com"))
+Maintainer: Jerome Braun <jvbraun.statistics@gmail.com>
 Description: Algorithmic experimental designs. Calculates exact and
         approximate theory experimental designs for D,A, and I
         criteria. Very large designs may be created. Experimental
@@ -17,10 +10,17 @@ Description: Algorithmic experimental designs. Calculates exact and
         done when whole and within plot factors interact.
 License: GPL (>= 2)
 URL: https://github.com/jvbraun/AlgDesign
-Packaged: 2024-09-21 09:02:59 UTC; hornik
+Packaged: 2025-04-05 15:41:56 UTC; jvbra
 Repository: CRAN
-Date/Publication: 2024-09-21 09:08:04 UTC
+Date/Publication: 2025-04-06 08:00:12 UTC
 NeedsCompilation: yes
+Authors@R: c(person(given = "Bob",
+                        family = "Wheeler",
+                        role = "aut",
+                        email = "bwheelerg@gmail.com"),
+                 person(given = "Jerome",
+                        family = "Braun",
+                        role = "cre",
+                        email = "jvbraun.statistics@gmail.com"))
 Author: Bob Wheeler [aut],
   Jerome Braun [cre]
-Maintainer: Jerome Braun <jvbraun.statistics@gmail.com>
